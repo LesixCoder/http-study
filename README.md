@@ -1,8 +1,8 @@
-# http 学习笔记
+# HTTP 学习笔记
 
 首先了解下浏览器输入url后http请求返回的过程是什么，看下图
 
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180606-002640-2x.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df06640167b27?w=2196&h=836&f=png&s=260971)
 
 (一) 首先一开始要做 `redirect` 重定向，那么为什么要 redirect 呢，因为浏览器可能记录了你这个地址已经永久跳转成一个新的地址，所以一开始浏览器需要判断需不需要 redirect 以及 redirect 到哪里。
 
@@ -12,16 +12,16 @@
 
 (四) 有了IP之后，就会创建tcp连接，该过程要经过tcp的三次握手之后才能真正创建连接。同时如果这个请求是https的，就会创建https的链接，这跟tcp的三次握手不一样，中间会有一个保证安全的数据传输的过程。
 
-(五) 连接创建好之后，才会真正发起http请求的数据包，数据包发送完成之后，服务器接收到这个数据并进行处理之后会返回这个请求响应的内容数据，返回数据之后这个http请求才真正完成
+(五) 连接创建好之后，才会真正发起http请求的数据包，数据包发送完成之后，服务器接收到这个数据并进行处理之后会返回这个请求响应的内容数据，返回数据之后这个http请求才真正完成
 
 ## 1. 网络协议分层
 我们先来看下经典五层模型图例：
 
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180606-144132-2x-2.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df0516fa0c16b?w=1938&h=1194&f=png&s=132543)
 
 这个五层模型中，分为应用层、传输层、网络层、数据链路层、物理层，每一个服务器上都会有这样的层级关系存在来维护整个网络数据传输的过程。
 
-本文主要内容是http相关内容，所以主要是在应用层展开。http协议基于传输层里的 TCP/IP 协议，该协议会涉及到一些http请求的性能，以及请求过程的消耗，会面也会有一些 TCP/IP 协议的介绍。
+本文主要内容是http相关内容，所以主要是在应用层展开。http协议基于传输层里的 TCP/IP 协议，该协议会涉及到一些http请求的性能，以及请求过程的消耗，会面也会有一些 TCP/IP 协议的介绍。
 
 **低三层：**
 
@@ -38,7 +38,7 @@
 
 **传输层向高层屏蔽了下层数据通信的细节**
 
-http协议要传输数据只需在浏览器输入url，输入url这个过程还涉及到一系列数据的拼装及传输，比如分包传输具体是怎么实现，服务器怎么接收，ajax请求，整个过程传输层已经做好了封装，这个过程用户不需要知道。
+http协议要传输数据只需在浏览器输入url，输入url这个过程还涉及到一系列数据的拼装及传输，比如分包传输具体是怎么实现，服务器怎么接收，ajax请求，整个过程传输层已经做好了封装，这个过程用户不需要知道。
 
 ### 1.2 应用层
 http协议所在层
@@ -68,12 +68,12 @@ http协议所在层
 
 **头信息压缩及推送**
 
-http2 解决了 http 里整体性能低下的问题，在http1.1里，每次发送请求和返回请求，它的http头都会进行一个完整传输，并且很多字段都是以字符串形式保存，占用大量带宽。http2里会将头信息进行压缩传输。
+http2 解决了 http 里整体性能低下的问题，在http1.1里，每次发送请求和返回请求，它的http头都会进行一个完整传输，并且很多字段都是以字符串形式保存，占用大量带宽。http2里会将头信息进行压缩传输。
 
-推送是什么概念呢？在http1.1里，客户端发起请求然后服务端响应请求返回内容，客户端永远是主动方，服务端永远是被动方。在http2里，服务端是可以主动发起数据传输的。比如：一个html页面中引入了css和js，浏览器首先要对html进行分析，再寻找css和js对应的url去请求对应的文件，这就涉及到一个顺序问题，需要先请求到html文本，在浏览器里运行解析了这个文本之后才能发送css及js的请求。但是在http2中服务端可以主动把css及js文件推送到客户端，与html并行传输，极大提高传输效率
+推送是什么概念呢？在http1.1里，客户端发起请求然后服务端响应请求返回内容，客户端永远是主动方，服务端永远是被动方。在http2里，服务端是可以主动发起数据传输的。比如：一个html页面中引入了css和js，浏览器首先要对html进行分析，再寻找css和js对应的url去请求对应的文件，这就涉及到一个顺序问题，需要先请求到html文本，在浏览器里运行解析了这个文本之后才能发送css及js的请求。但是在http2中服务端可以主动把css及js文件推送到客户端，与html并行传输，极大提高传输效率
 
 ## 3. http的连接
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180606-162521-2x.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df0b06b4f2025?w=1958&h=578&f=png&s=42954)
 
 在客户端和服务端之间进行http请求的发送和返回的过程当中，需要创建一个 TCP connection。http只有请求和响应这个概念，不存在连接，请求和响应都是数据包，
 之间要经过一个传输的通道，这个传输的通道就是在tcp里创建的一个连接(TCP connection)。这个连接可以保持状态，http请求就是在这个连接之上发送的，所以在一个tcp连接上可以发送多个http请求。
@@ -82,10 +82,10 @@ http2 解决了 http 里整体性能低下的问题，在http1.1里，每次发�
 
 在http1.1里，这个连接可以通过某种方式声明是否保持连接状态。tcp连接在创建过程中有三次握手消耗，三次握手就表示三次网络传输(客户端发送 - 服务端响应 - 客户端再次发送)，然后才能发送http请求。如果tcp连接一直保持，第二个http请求就没有三次握手的开销
 
-在http2里不仅可以保持tcp的连接，同时这个连接上的http请求可以并发，就是说同一个用户对同一个服务器发起一个网页请求时只需要一个tcp连接。
+在http2里不仅可以保持tcp的连接，同时这个连接上的http请求可以并发，就是说同一个用户对同一个服务器发起一个网页请求时只需要一个tcp连接。
 
 ### 3.1 tcp的三次握手
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180606-162552-2x.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df06a1de3f09f?w=1630&h=1146&f=png&s=72843)
 
 (一) 在tcp的三次握手当中，客户端会向服务端发起一个创建连接的数据包请求，这里会有一个标识为 `SYN=1`,SYN是一个标志位，表示创建请求的数据包。后面会发送一个叫 `Seq=X`，X表示数字，一般为1。服务端接收到这个数据包之后就会知道要创建一个连接
 
@@ -110,15 +110,15 @@ http2 解决了 http 里整体性能低下的问题，在http1.1里，每次发�
   * 目前还没有非常成熟的使用方案
 
 ### 3.3 HTTP报文
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180606-181124-2x.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df0518d49cbf9?w=1366&h=388&f=png&s=160645)
 
 从图中可以看到http首部下面有一段空行，空行下面表示 http body 部分，上面就是 http headers 部分。
 
 #### 3.3.1 请求报文
 
-(一)  **GET**
+(一)  **GET**
 
-http请求头中，首行第一部分包含的是 `method` 请求方法，每个方法有各自的语义，分别是 GET(获取数据)、POST(创建数据)、PUT(更新数据)、DELETE(删除数据)。这几种方法只是语义上的说明，并没有强约束，比如使用 GET 方法去更新数据，只是这样违反了http语义化的定义规则。
+http请求头中，首行第一部分包含的是 `method` 请求方法，每个方法有各自的语义，分别是 GET(获取数据)、POST(创建数据)、PUT(更新数据)、DELETE(删除数据)。这几种方法只是语义上的说明，并没有强约束，比如使用 GET 方法去更新数据，只是这样违反了http语义化的定义规则。
 
 (二) **/test/hi-there.txt**
 
@@ -148,7 +148,7 @@ DELETE - 请求服务器删除指定的页面。
 ### 3.5 HTTP CODE
 * 定义服务器对请求的处理结果
 * 各个区间的CODE有各自的语义
-* 好的HTTP服务可以通过CODE判断结果
+* 好的HTTP服务可以通过CODE判断结果
 
 **HTTP Status：**
 ```
@@ -219,15 +219,15 @@ DELETE - 请求服务器删除指定的页面。
 ## 4. HTTP客户端
 浏览器就是我们最常用的http客户端
 
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180606-193151-2x.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df07149c7d787?w=1036&h=956&f=png&s=517876)
 
-同时 curl 可以查看http请求返回的内容
+同时 curl 可以查看http请求返回的内容
 
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180606-222909-2x-2.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df07149fa5af7?w=1810&h=834&f=png&s=760426)
 
 curl还可以查看请求的详细内容， `curl  -v [host]`
 
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180606-222733-2x.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df0714a036364?w=1712&h=788&f=png&s=659172)
 
 ### 4.1 CORS跨域请求的限制与解决
 做过前端开发的同学对跨域并不会陌生，通常我们可以使用jsonp去实现跨域请求。
@@ -248,7 +248,7 @@ response.writeHead(200, {
   'Access-Control-Allow-Origin': '*'
 })
 ```
-浏览器在发送请求的时候并不知道服务是否跨域，还是会发送请求并且接收返回内容，只是在浏览器接收内容的时候没有找到 `Access-Control-Allow-Origin` 头设置为允许的话，它会把请求返回的内容忽略掉并且会在服务端报错。这个是浏览器所提供的功能。
+浏览器在发送请求的时候并不知道服务是否跨域，还是会发送请求并且接收返回内容，只是在浏览器接收内容的时候没有找到 `Access-Control-Allow-Origin` 头设置为允许的话，它会把请求返回的内容忽略掉并且会在服务端报错。这个是浏览器所提供的功能。
 
 实际上 Access-Control-Allow-Origin 值为 * 是不安全的，这样会导致第三方服务也可以通过跨域访问你的服务，可以设置为特定的域名
 ```
@@ -258,16 +258,16 @@ response.writeHead(200, {
 ```
 #### 4.1.1 CORS预请求
 
-浏览器是根据 header 判断某个请求的返回是否允许，如果想要允许自定义的头进行发送的话，需要返回新的头告知浏览器允许
+浏览器是根据 header 判断某个请求的返回是否允许，如果想要允许自定义的头进行发送的话，需要返回新的头告知浏览器允许
 ```
 response.writeHead(200, {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'X-Test-Cors'
 })
 ```
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180606-233126-2x.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df06ca69fbecc?w=1176&h=516&f=png&s=235520)
 
-同时会发现 network 中多出一个请求，这就是预请求，它的 `Request Method` 为 `OPTIONS`，服务端可以根据不同method进行不同的操作，浏览器根据这个 OPTIONS 请求，来获得服务端允许的权限，接下来发送的它所认可的请求就会被允许，这就是浏览器对于跨域请求的预请求操作。
+同时会发现 network 中多出一个请求，这就是预请求，它的 `Request Method` 为 `OPTIONS`，服务端可以根据不同method进行不同的操作，浏览器根据这个 OPTIONS 请求，来获得服务端允许的权限，接下来发送的它所认可的请求就会被允许，这就是浏览器对于跨域请求的预请求操作。
 
 (一) 在跨域请求中，默认允许的方法只有 GET、HEAD、POST，其它的方法默认不允许，浏览器是有一个预请求的方式去验证的。
 ```
@@ -276,7 +276,7 @@ response.writeHead(200, {
   'Access-Control-Allow-Methods': 'PUT'
 })
 ```
-还可以设置某个请求下允许跨域的最大时间,这样就不需要再次发送预请求去验证，可直接发送正式请求
+还可以设置某个请求下允许跨域的最大时间,这样就不需要再次发送预请求去验证，可直接发送正式请求
 ```
 response.writeHead(200, {
   'Access-Control-Allow-Origin': '*',
@@ -285,7 +285,7 @@ response.writeHead(200, {
 })
 ```
 
-(二) 默认允许的Content-Type：text/plain、multipart/form-data、application/x-www-form-urlencoded。这三个就是在html里使用form表单可以设置的三种数据类型。其它的也需要预请求验证过之后才能进行发送。
+(二) 默认允许的Content-Type：text/plain、multipart/form-data、application/x-www-form-urlencoded。这三个就是在html里使用form表单可以设置的三种数据类型。其它的也需要预请求验证过之后才能进行发送。
 
 (三) 其它的请求头限制具体可以查看文档
 https://fetch.spec.whatwg.org/#cors-safelisted-request-header
@@ -304,15 +304,15 @@ https://fetch.spec.whatwg.org/#cors-safelisted-request-header
   * `s-maxage = <seconds>` 在代理服务器中才会生效，代理服务器中如果两个都设置了，会优先选择 s-maxage 配置项
   * `max-stale = <secon ds>` 发起端设置。即便缓存失效，只要这个时间内还可以使用过期的缓存，而不需要去原服务器请求新的内容。
 * 重新验证(不常用)
-  * `must-revalidate` 在设置了max-age缓存中如果过期，必须去原服务端发送请求然后重新获取数据再来验证内容是否真的过期，而不能直接使用本地缓存。
+  * `must-revalidate` 在设置了max-age缓存中如果过期，必须去原服务端发送请求然后重新获取数据再来验证内容是否真的过期，而不能直接使用本地缓存。
   * `proxy-revalidate` 和 must-revalidate 类似，但是用在缓存服务器当中。
 * 其它
-  * `no-store` 与 no-cache 对应，表示任何情况下都不会存储缓存，永远都要去服务端请求新的内容才能使用它。即便服务端允许使用缓存，但本地没有进行缓存
+  * `no-store` 与 no-cache 对应，表示任何情况下都不会存储缓存，永远都要去服务端请求新的内容才能使用它。即便服务端允许使用缓存，但本地没有进行缓存
   * `no-transform` 用在 proxy 服务器，有些proxy服务器返回资源过大，会帮助进行压缩及格式转换，该属性会不允许。
 
 没有缓存情况下请求资源
 
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180607-134507-2x.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df06d3367c407?w=1142&h=304&f=png&s=114896)
 
 设置客户端缓存后
 ```
@@ -322,7 +322,7 @@ response.writeHead(200, {
 })
 response.end('console.log("script loaded")')
 ```
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180607-134342-2x.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df06c8a58ea75?w=1156&h=330&f=png&s=136537)
 
 可以看到 Size 变为了 == (from memory cache) ==，表示从浏览器中读取缓存。
 
@@ -333,7 +333,7 @@ response.end('console.log("script loaded")')
 ### 4.3 资源验证
 首先看一张图
 
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180607-141513-2x.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df0619673a24f?w=2430&h=1094&f=png&s=343314)
 
 浏览器创建请求，请求到达本地缓存(如果有cache-control)，如果有本地缓存，就直接返回给浏览器显示出来，不经过任何网络传输。如果没有本地缓存，请求进入网络传输，如果有代理服务器就会进入并查找缓存设置，查看资源是否被缓存，有缓存就返回缓存资源经过本地缓存再到浏览器显示。如果代理服务器未缓存，就会进入原服务器获取新的内容再返回。
 
@@ -415,12 +415,12 @@ http的请求是在tcp的连接上进行发送的，tcp连接又分为长连接�
 
 长连接就是在tcp连接上把http请求发送并接收返回，这个时候一次http请求已经结束，浏览器和服务器会协商是否断掉这个连接，长连接就是在不断掉连接下可以持续发送http请求，适合高并发。
 
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180607-164944-2x.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df0714af5a2c9?w=1324&h=782&f=png&s=561559)
 在Connection Id这一栏可以看到很多 10247 的相同id，表示这些请求都是在同一连接下发送的。但还是会有不同的连接，因为http1.1的连接在tcp连接上发送请求是有先后顺序的，不会并发请求。
 
 我们希望在加载网站首页的时候可以并发处理这些请求，浏览器可以允许产生一个并发的创建tcp连接，chrome允许最大并发数为6。
 
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180607-170036-2x.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df06411163615?w=1424&h=860&f=png&s=639355)
 
 可以看到，并发情况下会创建不同的tcp连接，chrome如果超出了6个并发，后面的请求会等待前面的完成，并且会尽量复用前面的连接地址而保持长连接，这是浏览器默认的行为。
 
@@ -431,7 +431,7 @@ response.writeHead(200, {
   'Connection': 'close'
 })
 ```
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180607-171314-2x.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df07170e360b1?w=1152&h=476&f=png&s=343978)
 
 关闭长连接之后可以发现每次连接id都会不一样，后面的也会等待前面的完成，没有重复利用tcp连接，每次请求发送完成tcp连接就会关闭。
 
@@ -477,7 +477,7 @@ http.createServer(function(req, res) {
   }
 })
 ```
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180607-180941-2x.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df05b64b024a2?w=1366&h=794&f=png&s=375430)
 
 图中可以看到第一次请求页面状态码为302，并跳转到了new这个url下。
 
@@ -514,7 +514,7 @@ res.writeHead(200, {
 ```
 加入限制之后浏览器就会阻止js脚本的加载并报错
 
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180607-183042-2x.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df0717122a48c?w=1250&h=266&f=png&s=292436)
 
 只允许本站下的资源
 ```
@@ -546,7 +546,7 @@ res.writeHead(200, {
   'Content-Security-Policy': 'default-src \'self\' report-uri /report'
 })
 ```
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180607-185148-2x.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df075835195bc?w=1038&h=524&f=png&s=332092)
 
 如果我们只想对限制进行错误报告而不阻止资源加载的话，可以这么写
 ```
@@ -561,7 +561,7 @@ scp不仅可以写在 headers 里，还可以在html的meta标签里写
 ```
 在meta下是不允许写 report-uri 的，这个指令只能写在 headers 里。
 
-## 5. Nginx代理服务器
+## 5. Nginx反向代理服务器
 
 ### 5.1 基础代理配置
 
@@ -583,14 +583,14 @@ server {
   }
 }
 ```
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180608-121046-2x.png)
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180608-121213-2x.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df0530e3e7c3c?w=1488&h=584&f=png&s=303857)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df069cab65421?w=934&h=140&f=png&s=96833)
 
-可以看到，浏览器下host 是 `test.com`，但在服务器下就变成了 `127.0.0.1:8888`。这是因为设置了代理，浏览器请求是发送到nginx的，nginx再进行转发，发送到实际的node服务，这时候作为发起方，它认为的 host 就是这里设置的 `proxy_pass`。
+可以看到，浏览器下host 是 `test.com`，但在服务器下就变成了 `127.0.0.1:8888`。这是因为设置了代理，浏览器请求是发送到nginx的，nginx再进行转发，发送到实际的node服务，这时候作为发起方，它认为的 host 就是这里设置的 `proxy_pass`。
 
 想要拿到浏览器的 host 。可以设置 `proxy_set_header` 属性 `$host`。
 
-中间代理可以修改任何想要修改的数据，但只是在http中，https的传输过程是加密的，中间代理无法解析。在手机上所看到的一些移动联通的广告就是经过代理层插入了一些代码所展示的。
+中间代理可以修改任何想要修改的数据，但只是在http中，https的传输过程是加密的，中间代理无法解析。在手机上所看到的一些移动联通的广告就是经过代理层插入了一些代码所展示的。
 
 ### 5.2 nginx缓存
 ```
@@ -619,25 +619,25 @@ response.writeHead(200, {
 `s-maxage` 是专门为代理缓存设置过期时间的，而private就表示只允许浏览器缓存。
 
 ### 5.3 HTTPS
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180608-130309-2x-2.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df060f2555b66?w=2646&h=1438&f=png&s=253075)
 
-https在传输过程中，客户端会生成一个随机数传输到服务端，中间会带上一个支持的加密套件，服务端拿到之后保存并且也生成一段随机数，然后把这段随机数和服务端生成的证书一同发到客户端，同时客户端也会把服务端的随机数保存，并且通过服务端证书生成预主秘钥，生成过程也会生成一个随机数，这个随机数通过公钥加密后传输给服务端，服务端通过私钥解密拿到预主秘钥。然后客户端和服务端同时对这三个随机数进行算法解密生成主密钥(这里会涉及到加密套件，服务端选择的加密套件必须是客户端所支持的)，后续的数据传输都是经过主密钥加密进行传输的。这对主密钥只有客户端和服务端共有，中间代理无法破解，这就是https的加密原理。
+https在传输过程中，客户端会生成一个随机数传输到服务端，中间会带上一个支持的加密套件，服务端拿到之后保存并且也生成一段随机数，然后把这段随机数和服务端生成的证书一同发到客户端，同时客户端也会把服务端的随机数保存，并且通过服务端证书生成预主秘钥，生成过程也会生成一个随机数，这个随机数通过公钥加密后传输给服务端，服务端通过私钥解密拿到预主秘钥。然后客户端和服务端同时对这三个随机数进行算法解密生成主密钥(这里会涉及到加密套件，服务端选择的加密套件必须是客户端所支持的)，后续的数据传输都是经过主密钥加密进行传输的。这对主密钥只有客户端和服务端共有，中间代理无法破解，这就是https的加密原理。
 
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180608-131702-2x-2.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df05187122868?w=1834&h=726&f=png&s=316191)
 
 这里是通过抓取工具抓的https加密的站点，可以看到，数据都被加密，无法破解。
 
 #### 5.3.1 nginx部署https服务
-要部署https服务，首先要生成一对公钥和私钥，这里有一个命令可以帮助生成
+要部署https服务，首先要生成一对公钥和私钥，这里有一个命令可以帮助生成
 
 ```
 openssl req -x509 -newkey rsa:2048 -nodes -sha256 -keyout localhost-privkey.pem -out localhost-cert.pem
 ```
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180608-170452-2x.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df076caa69ef1?w=1836&h=516&f=png&s=614427)
 
 敲入回车之后可以看到这样的提示，这里我们测试，全部按回车跳过就好。
 
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180608-170824-2x.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df069cccd3cc5?w=1230&h=78&f=png&s=55961)
 
 最终会生成两个文件，然后在nginx配置这个证书
 ```
@@ -668,7 +668,7 @@ server {
 }
 ```
 配置好之后重启nginx服务，然后输入https的域名
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180608-171754-2x.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df05c44c54c25?w=1008&h=426&f=png&s=102963)
 
 提示非安全连接是因为chrome浏览器认为的安全证书是要通过有权威的机构去签发的，这种机构会先认证域名所有者与服务是否属于你，验证通过才会签发证书。
 
@@ -687,7 +687,7 @@ res.writeHead(200, {
 ```
 server 头信息了的 `Link`可以指定这个头想要推送的内容，`</xxx>` 为文件绝对路径，`as` 指定文件类型，`preload` 表示需要进行服务端推送。
 
-nginx里也要做这些配置。在使用nginx做反向代理时，我们希望nginx帮助处理这些东西，而 http2 也是在nginx里提供的，node server 还是为http的服务，nginx 会把http2的请求转化为http的请求发送到node服务上。
+nginx里也要做这些配置。在使用nginx做反向代理时，我们希望nginx帮助处理这些东西，而 http2 也是在nginx里提供的，node server 还是为http的服务，nginx 会把http2的请求转化为http的请求发送到node服务上。
 
 为何不在node上做http2的服务呢，因为在nginx开启一个http2的服务是非常容易的，在 node 上做http2的服务可能还会涉及到大量的逻辑修改，成本开销比较大。
 
@@ -722,16 +722,18 @@ server {
   }
 }
 ```
-`http2_push_preload` 开启之后，在接收 node 返回信息里如果有 `Link：rel=preload`，就会去寻找该路径资源，然后主动推送。
+`http2_push_preload` 开启之后，在接收 node 返回信息里如果有 `Link：rel=preload`，就会去寻找该路径资源，然后主动推送。
 
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180608-175257-2x.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df0517abd92a1?w=1134&h=208&f=png&s=154474)
 
 可以看到 `Protocal` 值为 `h2`，这个就是http2的缩写。
 
 这里有一个可以测试http2性能的网站 [网站入口](https://http2.akamai.com/demo/http2-lab.html)
 
-![](https://blog.liusixin.cn/content/images/2018/06/WX20180608-183211-2x-2.png)
+![](https://user-gold-cdn.xitu.io/2018/6/8/163df06e50396ee4?w=1638&h=900&f=png&s=251658)
 
 可以看到，使用HTTP2的性能提升非常显著。
 
 有些浏览器不支持http2，nginx会帮助浏览器做兼容处理，这个兼容方案为 ALPN ，客户端跟服务端会进行协商用哪个协议，如果客户端只支持http1.1，服务端就会以http1.1的传输方式进行。
+
+**以上就是对http知识的总结，很多地方没有写全，有不好的地方请大家多多指正**
