@@ -38,7 +38,7 @@
 
 **传输层向高层屏蔽了下层数据通信的细节**
 
-http协议要传输数据只需在浏览器输入url，输入url这个过程还涉及到一系列数据的拼装及传输，比如分包传输具体是怎么实现，服务器怎么接收，ajax请求，整个过程传输层已经做好了封装，这个过程用户不需要知道。
+http协议要传输数据只需在浏览器输入url，输入url这个过程还涉及到一系列数据的拼装及传输，比如分包传输具体是怎么实现，服务器怎么接收，ajax请求，整个过程传输层已经做好了封装，这个过程用户不需要知道。
 
 ### 1.2 应用层
 http协议所在层
@@ -82,7 +82,7 @@ http2 解决了 http 里整体性能低下的问题，在http1.1里，每次发�
 
 在http1.1里，这个连接可以通过某种方式声明是否保持连接状态。tcp连接在创建过程中有三次握手消耗，三次握手就表示三次网络传输(客户端发送 - 服务端响应 - 客户端再次发送)，然后才能发送http请求。如果tcp连接一直保持，第二个http请求就没有三次握手的开销
 
-在http2里不仅可以保持tcp的连接，同时这个连接上的http请求可以并发，就是说同一个用户对同一个服务器发起一个网页请求时只需要一个tcp连接。
+在http2里不仅可以保持 tcp 的连接，同时这个连接上的http请求可以并发，就是说同一个用户对同一个服务器发起一个网页请求时只需要一个tcp连接。
 
 ### 3.1 tcp的三次握手
 ![](https://user-gold-cdn.xitu.io/2018/6/8/163df06a1de3f09f?w=1630&h=1146&f=png&s=72843)
@@ -103,7 +103,7 @@ http2 解决了 http 里整体性能低下的问题，在http1.1里，每次发�
   * 用来唯一标识互联网上的信息资源
   * 包含URL和URN
 * URL(Uniform Resource Locator)
-  * 统一资源定位器
+  * 统一资源定位器
 * URN
   * 永久统一资源定位符
   * 在资源移动之后还能被找到
@@ -116,9 +116,9 @@ http2 解决了 http 里整体性能低下的问题，在http1.1里，每次发�
 
 #### 3.3.1 请求报文
 
-(一)  **GET**
+(一)  **GET**
 
-http请求头中，首行第一部分包含的是 `method` 请求方法，每个方法有各自的语义，分别是 GET(获取数据)、POST(创建数据)、PUT(更新数据)、DELETE(删除数据)。这几种方法只是语义上的说明，并没有强约束，比如使用 GET 方法去更新数据，只是这样违反了http语义化的定义规则。
+http请求头中，首行第一部分包含的是 `method` 请求方法，每个方法有各自的语义，分别是 GET(获取数据)、POST(创建数据)、PUT(更新数据)、DELETE(删除数据)。这几种方法只是语义上的说明，并没有强约束，比如使用 GET 方法去更新数据，只是这样违反了http语义化的定义规则。
 
 (二) **/test/hi-there.txt**
 
@@ -129,7 +129,7 @@ http请求头中，首行第一部分包含的是 `method` 请求方法，每�
 首行第三部分是http的版本，现在的web服务一般都是http1.1，http2也会有越来越多的实现，不同的版本也会有不同操作方式。
 
 #### 3.3.2 响应报文
-(一)  **200 ok**
+(一)  **200 ok**
 
 http状态码，200 代表成功
 
@@ -148,7 +148,7 @@ DELETE - 请求服务器删除指定的页面。
 ### 3.5 HTTP CODE
 * 定义服务器对请求的处理结果
 * 各个区间的CODE有各自的语义
-* 好的HTTP服务可以通过CODE判断结果
+* 好的HTTP服务可以通过CODE判断结果
 
 **HTTP Status：**
 ```
@@ -242,7 +242,7 @@ curl还可以查看请求的详细内容， `curl  -v [host]`
 
 **服务端设置跨域：**
 
-这里以express为例，我们只需在响应头中添加 `Access-Control-Allow-Origin` 即可
+这里以express为例，我们只需在响应头中添加 `Access-Control-Allow-Origin` 即可
 ```
 response.writeHead(200, {
   'Access-Control-Allow-Origin': '*'
@@ -258,7 +258,7 @@ response.writeHead(200, {
 ```
 #### 4.1.1 CORS预请求
 
-浏览器是根据 header 判断某个请求的返回是否允许，如果想要允许自定义的头进行发送的话，需要返回新的头告知浏览器允许
+浏览器是根据 header 判断某个请求的返回是否允许，如果想要允许自定义的头进行发送的话，需要返回新的头告知浏览器允许
 ```
 response.writeHead(200, {
   'Access-Control-Allow-Origin': '*',
@@ -285,7 +285,7 @@ response.writeHead(200, {
 })
 ```
 
-(二) 默认允许的Content-Type：text/plain、multipart/form-data、application/x-www-form-urlencoded。这三个就是在html里使用form表单可以设置的三种数据类型。其它的也需要预请求验证过之后才能进行发送。
+(二) 默认允许的Content-Type：text/plain、multipart/form-data、application/x-www-form-urlencoded。这三个就是在html里使用form表单可以设置的三种数据类型。其它的也需要预请求验证过之后才能进行发送。
 
 (三) 其它的请求头限制具体可以查看文档
 https://fetch.spec.whatwg.org/#cors-safelisted-request-header
@@ -304,7 +304,7 @@ https://fetch.spec.whatwg.org/#cors-safelisted-request-header
   * `s-maxage = <seconds>` 在代理服务器中才会生效，代理服务器中如果两个都设置了，会优先选择 s-maxage 配置项
   * `max-stale = <secon ds>` 发起端设置。即便缓存失效，只要这个时间内还可以使用过期的缓存，而不需要去原服务器请求新的内容。
 * 重新验证(不常用)
-  * `must-revalidate` 在设置了max-age缓存中如果过期，必须去原服务端发送请求然后重新获取数据再来验证内容是否真的过期，而不能直接使用本地缓存。
+  * `must-revalidate` 在设置了max-age缓存中如果过期，必须去原服务端发送请求然后重新获取数据再来验证内容是否真的过期，而不能直接使用本地缓存。
   * `proxy-revalidate` 和 must-revalidate 类似，但是用在缓存服务器当中。
 * 其它
   * `no-store` 与 no-cache 对应，表示任何情况下都不会存储缓存，永远都要去服务端请求新的内容才能使用它。即便服务端允许使用缓存，但本地没有进行缓存
@@ -328,7 +328,7 @@ response.end('console.log("script loaded")')
 
 在做前端开发的时候，有些静态资源文件我们希望浏览器缓存下来，但是在服务端内容更新之后，客户端请求的是缓存下的旧资源文件，这样就没法更新应用。
 
-目前最常见的方式就是前端编译的时候加静态资源文件md5戳。
+目前最常见的方式就是前端编译的时候加静态资源文件md5戳。
 
 ### 4.3 资源验证
 首先看一张图
@@ -435,7 +435,7 @@ response.writeHead(200, {
 
 关闭长连接之后可以发现每次连接id都会不一样，后面的也会等待前面的完成，没有重复利用tcp连接，每次请求发送完成tcp连接就会关闭。
 
-一般情况下keep-alive都是开启的，并且会设置一个自动关闭时间。
+一般情况下keep-alive都是开启的，并且会设置一个自动关闭时间。
 
 **信道复用**
 
@@ -481,7 +481,7 @@ http.createServer(function(req, res) {
 
 图中可以看到第一次请求页面状态码为302，并跳转到了new这个url下。
 
-但是 302 是临时跳转，每一次访问都要经过服务端的跳转，图中也可以看到有两个url的请求。如果确定每次访问 / 下都会跳转到 new 下，可以指定状态码为 301 永久跳转，这样访问页面就只出现 new。
+但是 302 是临时跳转，每一次访问都要经过服务端的跳转，图中也可以看到有两个url的请求。如果确定每次访问 / 下都会跳转到 new 下，可以指定状态码为 301 永久跳转，这样访问页面就只出现 new。
 
 需要注意的是，301 会尽可能长时间的把跳转页面缓存下来，这时候服务端即使修改了url，浏览器还是会从缓存里读取，这个是有用户使用浏览器情况所决定的，除非用户主动去清理浏览器缓存。所以 301 要慎重处理。
 
@@ -530,7 +530,7 @@ res.writeHead(200, {
   'Content-Security-Policy': 'default-src \'self\' http://www.example.com/'
 })
 ```
-限制form表单的跳转
+限制form表单的跳转
 ```
 res.writeHead(200, {
   'Content-Type': 'text/html',
@@ -554,7 +554,7 @@ res.writeHead(200, {
   'Content-Type': 'text/html',
   'Content-Security-Policy-Report-Only': 'default-src \'self\''
 })
-```
+```
 scp不仅可以写在 headers 里，还可以在html的meta标签里写
 ```
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
@@ -569,7 +569,7 @@ nginx是现在互联网界用的最多的web服务器，它是一个非常纯粹
 
 nginx的安装和用法可以查网上相关教程。这里介绍的主要是nginx的代理和缓存的功能。
 
-一个最简单的代理
+一个最简单的代理
 ```
 // nginx.conf
 
@@ -590,7 +590,7 @@ server {
 
 想要拿到浏览器的 host 。可以设置 `proxy_set_header` 属性 `$host`。
 
-中间代理可以修改任何想要修改的数据，但只是在http中，https的传输过程是加密的，中间代理无法解析。在手机上所看到的一些移动联通的广告就是经过代理层插入了一些代码所展示的。
+中间代理可以修改任何想要修改的数据，但只是在http中，https的传输过程是加密的，中间代理无法解析。在手机上所看到的一些移动联通的广告就是经过代理层插入了一些代码所展示的。
 
 ### 5.2 nginx缓存
 ```
@@ -609,7 +609,7 @@ server {
   }
 }
 ```
-**proxy_cache_path：**第一个选项表示缓存路径，`levels` 是否创建二级文件夹，`keys_zone` url对应的缓存位置及内存大小
+**proxy_cache_path：** 第一个选项表示缓存路径，`levels` 是否创建二级文件夹，`keys_zone` url对应的缓存位置及内存大小
 
 ```
 response.writeHead(200, {
